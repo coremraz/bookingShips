@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\LoginUserRequest;
+use App\Http\Requests\Api\RegisterUserRequest;
+use App\Http\Resources\UserResource;
 use App\Services\RegisteredUserService;
 use Illuminate\Http\Request;
 
@@ -15,15 +18,21 @@ class RegisteredUserController extends Controller
         $this->RegisteredUserService = $RegisteredUserService;
     }
 
-    public function store(Request $request)
+    public function store(RegisterUserRequest $request)
     {
-        $response = $this->RegisteredUserService->register($request->all());
+        $response = $this->RegisteredUserService->register($request);
         return response()->json($response->getData(), $response->getStatusCode());
     }
 
-    public function login(Request $request)
+    public function login(LoginUserRequest $request)
     {
-        $response = $this->RegisteredUserService->login($request->all());
+        $response = $this->RegisteredUserService->login($request);
+        return response()->json($response->getData(), $response->getStatusCode());
+    }
+
+    public function logout(Request $request)
+    {
+        $response = $this->RegisteredUserService->logout($request);
         return response()->json($response->getData(), $response->getStatusCode());
     }
 }
