@@ -3,23 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Services\UserService;
+
 
 class UserController extends Controller
 {
+    private $UserService;
+
+    public function __construct(UserService $UserService)
+    {
+        $this->UserService = $UserService;
+    }
     public function index()
     {
-        $users = User::paginate();
-
-        return UserResource::collection($users);
+        return $this->UserService->index();
     }
 
     public function show($id)
     {
-        $user = User::find($id);
-
-        return UserResource::make($user);
+        return $this->UserService->show($id);
     }
 
 }

@@ -3,16 +3,16 @@ namespace App\Services;
 
 use App\Http\Requests\Api\LoginUserRequest;
 use App\Http\Requests\Api\RegisterUserRequest;
-use App\Models\User;
+use App\Models\Seller;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class RegisteredUserService extends Service
+class RegisteredSellerService extends Service
 {
     use ApiResponses;
-    public function __construct(User $model)
+    public function __construct(Seller $model)
     {
         $this->model = $model;
     }
@@ -20,11 +20,11 @@ class RegisteredUserService extends Service
     public function register(RegisterUserRequest $request)
     {
         $request->validated($request->all());
-        $user = new User($request->all());
-        $user->save();
+        $seller = new Seller($request->all());
+        $seller->save();
 
-        Auth::login($user);
-        $token = $user->createToken('auth_token')->plainTextToken;
+        Auth::login($seller);
+        $token = $seller->createToken('auth_token')->plainTextToken;
 
         return $this->ok(
             'Registered',
@@ -38,15 +38,15 @@ class RegisteredUserService extends Service
     {
         $request->validated($request->all());
 
-        $user = User::where('email', $request->email)->first();
+        $seller = Seller::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$seller || !Hash::check($request->password, $seller->password)) {
             return $this->error('Invalid credentials', '', 401);
         }
 
-        Auth::login($user);
+        Auth::login($seller);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $seller->createToken('auth_token')->plainTextToken;
         return $this->ok(
             'Authenticated',
             [
@@ -59,6 +59,6 @@ class RegisteredUserService extends Service
     {
         $request->user()->currentAccessToken()->delete();
 
-        return $this->ok('Success', '');
+        return $this->ok('');
     }
 }

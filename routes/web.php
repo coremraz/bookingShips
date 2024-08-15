@@ -16,6 +16,10 @@ Route::get('/login', function () {
     return view('auth.login');
 });
 
+Route::get('api/docs', function () {
+    return view('docs.index');
+});
+
 Route::get('/profile', function () {
     $user = Auth::user();
     return view('profile.index', ['user' => $user]);
