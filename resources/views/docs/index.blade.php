@@ -110,5 +110,30 @@
     </tr>
     </tbody>
 </table>
+<h1><b>Профиль</b></h1>
+<table>
+    <thead>
+    <tr>
+        <th>Method</th>
+        <th>Endpoint</th>
+        <th>Description</th>
+        <th>Required Fields</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>PATCH</td>
+        <td><a href="api/user/{id}">api/user/{id}</a></td>
+        <td>Обновление данных профиля</td>
+        <td>Любые поля из таблицы users, Bearer токен для авторизации</td>
+    </tr>
+    <tr>
+        <td>PATCH</td>
+        <td><a href="api/seller/{id}">api/seller/{id}</a></td>
+        <td>Обновление данных профиля</td>
+        <td>Любые поля из таблицы sellers, Bearer токен для авторизации</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
