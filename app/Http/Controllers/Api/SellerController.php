@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Services\SellerService;
+use App\Http\Requests\Api\UpdateUserRequest;
 use App\Http\Resources\SellerResource;
 use App\Models\Seller;
+use App\Services\UserService;
 
 
-class SellerController extends Controller
+class SellerController extends UserController
 {
-    public function index()
+
+    private $SellerService;
+
+    public function __construct(SellerService $SellerService)
+    {
+        $this->SellerService = $SellerService;
+    }
+
+        public function index()
     {
         $sellers = Seller::paginate();
 
@@ -21,6 +31,11 @@ class SellerController extends Controller
         $sellers = Seller::find($id);
 
         return SellerResource::make($sellers);
+    }
+
+    public function update(UpdateUserRequest $request, $id)
+    {
+        return $this->SellerService->update($request, $id);
     }
 
 }

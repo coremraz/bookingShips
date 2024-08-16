@@ -9,44 +9,21 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
-class Seller extends Authenticatable
+class Seller extends User
 {
     use HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
+        'company_name',
+        'socials',
         'name',
+        'last_name',
         'email',
         'number',
-        'last_name',
-        'password',
+        'date_birth',
+        'adress',
+        'sex',
+        'password'
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
-
-    public function checkPassword($password)
-    {
-        return Hash::check($password, $this->password);
-    }
 
 }
